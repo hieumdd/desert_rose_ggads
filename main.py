@@ -35,7 +35,7 @@ def run(bucket: str, filename: str) -> Response:
     try:
         output_rows = load(transform(get_data(output)), BQ_CLIENT, DATASET, TABLE)
         return {
-            "status": "ok",
+            "status": "sucess",
             "output_rows": output_rows,
             "file_change": move_to_success(STORAGE_CLIENT, source_blob),
         }
@@ -47,11 +47,7 @@ def run(bucket: str, filename: str) -> Response:
 
 
 def main(event: Event, context: Context) -> Response:
-    if context.event_type != "google.storage.object.finalize":
-        response: Response = {
-            "status": "pass",
-        }
-    else:
-        response = run(event["bucket"], event["name"])
+    print(event)
+    response = run(event["bucket"], event["name"])
     print(response)
     return response
