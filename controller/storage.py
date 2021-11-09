@@ -4,7 +4,6 @@ from typing import Callable
 
 from google.cloud.storage import Client, Bucket, Blob
 
-INITIAL_BUCKET = ""
 SUCCESS_BUCKET = ""
 FAILED_BUCKET = ""
 
