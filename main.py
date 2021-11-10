@@ -39,27 +39,18 @@ def run(bucket: str, filename: str) -> Response:
     source_bucket = STORAGE_CLIENT.bucket(bucket)
     source_blob = source_bucket.blob(filename)
     output = download_to_io(source_blob)
+    file_move = move_bucket(source_bucket, source_blob, now)
     try:
         output_rows = load(transform(get_data(output), now), BQ_CLIENT, DATASET, TABLE)
         return {
             "status": "sucess",
             "output_rows": output_rows,
-            "file_change": move_bucket(
-                STORAGE_CLIENT.bucket(SUCCESS_BUCKET),
-                source_bucket,
-                source_blob,
-                now,
-            ),
+            "file_change": file_move(STORAGE_CLIENT.bucket(SUCCESS_BUCKET)),
         }
     except:
         return {
             "status": "failed",
-            "file_change": move_bucket(
-                STORAGE_CLIENT.bucket(FAILED_BUCKET),
-                source_bucket,
-                source_blob,
-                now,
-            ),
+            "file_change": file_move(STORAGE_CLIENT.bucket(FAILED_BUCKET)),
         }
 
 
