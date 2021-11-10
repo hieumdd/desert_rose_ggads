@@ -1,3 +1,4 @@
+import os
 from typing import TypedDict
 
 from google.cloud import bigquery, storage
@@ -11,7 +12,7 @@ STORAGE_CLIENT = storage.Client()
 DATASET = "GoogleAdsExport"
 TABLE = "CallTrackingCSV"
 
-UPLOAD_BUCKET = "desert-rose-gg-ads-csv-upload"
+UPLOAD_BUCKET = os.getenv('UPLOAD_BUCKET')
 SUCCESS_BUCKET = "desert-rose-gg-ads-csv-success"
 FAILED_BUCKET = "desert-rose-gg-ads-csv-failed"
 

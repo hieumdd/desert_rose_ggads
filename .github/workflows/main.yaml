@@ -6,7 +6,7 @@ on:
 
 env:
   FUNCTION_NAME: desert_rose_ggads
-  BUCKET: ""
+  BUCKET: "desert-rose-gg-ads-csv-upload"
 
 jobs:
   deploy:
