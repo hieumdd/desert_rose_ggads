@@ -16,7 +16,7 @@ def move_bucket(bucket: Bucket, blob: Blob, now: datetime) -> Callable[[Bucket],
         bucket.copy_blob(
             blob=blob,
             destination_bucket=destination,
-            new_name=f"{filename}-{now.strftime('%Y%m%d')}.{ext}",
+            new_name=f"{filename}-{round(now.timestamp())}.{ext}",
         )
         blob.delete()
         return f"Moved {blob.name} to {destination}"
