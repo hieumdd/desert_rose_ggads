@@ -28,7 +28,7 @@ jobs:
           --region=us-central1
           --timeout=530
           --project=${{ secrets.PROJECT_ID }}
-          --memory=512MB
+          --memory=2048MB
           --runtime=python39
           --trigger-resource=${{ env.BUCKET }}
           --trigger-event=google.storage.object.finalize
