@@ -35,7 +35,7 @@ def transform(rows: list[dict], now: datetime) -> list[dict]:
 
     return [
         {
-            "start_time": transform_date(row["start_time"]),
+            # "start_time": transform_date(row["start_time"]),
             "caller_phone_number": row["caller_phone_number"],
             "campaign": row["campaign"],
             "campaign_id": safe_int(row["campaign_id"]),
@@ -60,7 +60,7 @@ def load(rows: list[dict], client: bigquery.Client, dataset: str, table: str) ->
                 create_disposition="CREATE_IF_NEEDED",
                 write_disposition="WRITE_APPEND",
                 schema=[
-                    {"name": "start_time", "type": "TIMESTAMP"},
+                    # {"name": "start_time", "type": "TIMESTAMP"},
                     {"name": "caller_phone_number", "type": "STRING"},
                     {"name": "campaign", "type": "STRING"},
                     {"name": "campaign_id", "type": "INTEGER"},
@@ -77,7 +77,7 @@ def load(rows: list[dict], client: bigquery.Client, dataset: str, table: str) ->
         .result()
         .output_rows
     )
-    update(client, dataset, table)
+    # update(client, dataset, table)
     return output_rows
 
 
@@ -89,7 +89,7 @@ def update(client: bigquery.Client, dataset: str, table: str) -> None:
         SELECT *,
             ROW_NUMBER() OVER
             (
-                PARTITION BY start_time, caller_phone_number, campaign, campaign_id, ad_group, ad_group_id, ad_id, search_keyword, keyword_id, day
+                PARTITION BY caller_phone_number, campaign, campaign_id, ad_group, ad_group_id, ad_id, search_keyword, keyword_id, day
                 ORDER BY _batched_at DESC
             ) AS row_num
         FROM {dataset}.{table}
