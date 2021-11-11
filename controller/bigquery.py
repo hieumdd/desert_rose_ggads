@@ -77,7 +77,7 @@ def load(rows: list[dict], client: bigquery.Client, dataset: str, table: str) ->
         .result()
         .output_rows
     )
-    update(client, dataset, table)
+    # update(client, dataset, table)
     return output_rows
 
 
